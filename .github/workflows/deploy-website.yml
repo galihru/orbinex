@@ -28,6 +28,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
       - name: Prepare Website Artifact
         run: |
           mkdir -p website/reference

@@ -32,7 +32,7 @@ Usage patterns and API examples are documented in [docs/USAGE.md](docs/USAGE.md)
 
 ## Training Website
 
-Interactive tutorial website (RustTraining-inspired layout with runnable cards and terminal lab) is located in [website](website).
+Interactive tutorial website with chapter-based Scala training, runnable cards, step-by-step terminal sandbox, and randomized quiz is located in [website](website).
 
 Deployment is automated via GitHub Pages workflow on push to `main` when website or docs files change.
 

@@ -25,19 +25,34 @@ jobs:
       - name: Prepare Wiki Repository
         id: prepare_wiki
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WIKI_PUSH_TOKEN: ${{ secrets.WIKI_PUSH_TOKEN }}
         run: |
-          WIKI_URL="https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.wiki.git"
+          TOKEN="$WIKI_PUSH_TOKEN"
+          if [ -z "$TOKEN" ]; then
+            TOKEN="$GITHUB_TOKEN"
+          fi
+
+          WIKI_URL="https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.wiki.git"
+
+          if [ -d wiki ]; then
+            rm -rf wiki
+          fi
+
           if git ls-remote "$WIKI_URL" >/dev/null 2>&1; then
             git clone "$WIKI_URL" wiki
-            echo "wiki_available=true" >> "$GITHUB_OUTPUT"
+            echo "wiki_remote_ready=true" >> "$GITHUB_OUTPUT"
           else
-            echo "wiki_available=false" >> "$GITHUB_OUTPUT"
-            echo "::warning::Wiki repository is not initialized yet. Open the Wiki tab once in GitHub UI, then rerun this workflow."
+            mkdir -p wiki
+            cd wiki
+            git init
+            git remote add origin "$WIKI_URL"
+            cd ..
+            echo "wiki_remote_ready=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::Wiki git endpoint is not ready yet. Workflow will still prepare content and retry push automatically on future runs."
           fi
 
       - name: Generate Wiki Pages
-        if: steps.prepare_wiki.outputs.wiki_available == 'true'
         run: |
           cp README.md wiki/Home.md
           cp CONTRIBUTING.md wiki/Contributing.md
@@ -65,7 +80,6 @@ jobs:
           EOF
 
       - name: Commit and Push Wiki
-        if: steps.prepare_wiki.outputs.wiki_available == 'true'
         run: |
           cd wiki
           git add .
@@ -74,4 +88,9 @@ jobs:
             exit 0
           fi
           git commit -m "docs(wiki): sync from ${GITHUB_SHA::7}"
-          git push origin HEAD:master
+
+          if git push origin HEAD:master; then
+            echo "Wiki sync completed."
+          else
+            echo "::warning::Could not push to wiki repository yet. If wiki page remains empty, open the Wiki tab once in GitHub and this workflow will retry automatically on the next push."
+          fi
