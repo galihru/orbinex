@@ -1,0 +1,35 @@
+package build
+
+import mill.*
+import scalalib.*
+import publish.*
+
+trait OrbinexPublishModule extends ScalaModule with PublishModule:
+  def scalaVersion = "3.8.1"
+  def publishVersion = sys.env.getOrElse("ORBINEX_PUBLISH_VERSION", "0.1.0")
+
+  def pomSettings = PomSettings(
+    description = "Orbinex modular physics and dynamic astronomy fetch toolkit",
+    organization = "io.github.galihru",
+    url = "https://github.com/galihru/Orbinex",
+    licenses = Seq(License.MIT),
+    versionControl = VersionControl.github("galihru", "Orbinex"),
+    developers = Seq(
+      Developer(
+        "galihru",
+        "Galih Ridho Utomo",
+        "https://github.com/galihru"
+      )
+    )
+  )
+
+object orbinexCore extends OrbinexPublishModule:
+  def artifactName = "orbinex-core"
+
+object orbinexFetch extends OrbinexPublishModule:
+  def artifactName = "orbinex-fetch"
+  override def moduleDeps = Seq(orbinexCore)
+
+object orbinex extends OrbinexPublishModule:
+  def artifactName = "orbinex"
+  override def moduleDeps = Seq(orbinexCore, orbinexFetch)
