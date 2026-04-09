@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chapter 5 - Interactive Quiz and Badge | Orbinex Scala Training</title>
+    <meta
+      name="description"
+      content="Chapter 5 of Orbinex Scala training: randomized quiz with scientific and terminal practical tasks plus shareable result links."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <div class="page-backdrop"></div>
+
+    <header class="site-topbar">
+      <a class="site-brand" href="../index.html">
+        <span class="site-brand-mark">Orbinex</span>
+        <span class="site-brand-text">Scala Scientific Training</span>
+      </a>
+      <div class="site-topbar-actions">
+        <a class="action-link" href="https://github.com/galihru/orbinex" target="_blank" rel="noreferrer">Repository</a>
+        <a class="action-link" href="04-terminal-sandbox.html">Terminal Lab</a>
+      </div>
+    </header>
+
+    <div class="book-layout">
+      <aside class="book-sidebar">
+        <label class="search-label" for="chapter-search">Chapter Search</label>
+        <input id="chapter-search" data-chapter-search type="search" placeholder="Find chapter" />
+
+        <nav class="chapter-nav">
+          <ul data-chapter-list>
+            <li><a class="chapter-link" href="../index.html">Home - Training Map</a></li>
+            <li><a class="chapter-link" href="01-overview.html">Chapter 1 - Scientific Overview</a></li>
+            <li><a class="chapter-link" href="02-installation.html">Chapter 2 - Installation and Usage</a></li>
+            <li><a class="chapter-link" href="03-formulations.html">Chapter 3 - Formulations and Logic</a></li>
+            <li><a class="chapter-link" href="04-terminal-sandbox.html">Chapter 4 - Step-by-Step Scala Terminal Lab</a></li>
+            <li><a class="chapter-link" href="05-quiz.html">Chapter 5 - Interactive Quiz and Badge</a></li>
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="book-content">
+        <section>
+          <p class="eyebrow">Chapter 5</p>
+          <h1>Interactive Quiz, Terminal Practice, and Shareable Badge</h1>
+          <p>
+            Questions are randomized per attempt. This chapter combines theory and
+            practical terminal tasks. After submission, your result can be shared by link
+            with score, badge, participant name, completion time, and answered items.
+          </p>
+        </section>
+
+        <section class="quiz-start-card">
+          <form data-quiz-start-form>
+            <label for="quiz-name">Participant Name</label>
+            <input id="quiz-name" data-quiz-name type="text" placeholder="Enter your name" required />
+            <button class="btn btn-primary" type="submit">Start Quiz</button>
+          </form>
+          <div class="quiz-meta-row">
+            <span>Timer: <strong data-quiz-timer>00:00</strong></span>
+            <span>Randomized question set generated at start.</span>
+          </div>
+        </section>
+
+        <section data-shared-result class="shared-result hidden"></section>
+
+        <section>
+          <h2>Quiz Session</h2>
+          <div data-quiz-container class="quiz-container"></div>
+          <div class="quiz-actions">
+            <button class="btn btn-primary" data-quiz-submit type="button" disabled>Submit Quiz</button>
+          </div>
+          <div data-quiz-result class="quiz-result hidden"></div>
+        </section>
+
+        <section class="chapter-pagination">
+          <a class="btn btn-ghost" href="04-terminal-sandbox.html">Back: Step-by-Step Scala Terminal Lab</a>
+          <a class="btn btn-primary" href="../index.html">Finish and Return Home</a>
+        </section>
+      </main>
+    </div>
+
+    <script src="../assets/app.js"></script>
+  </body>
+</html>

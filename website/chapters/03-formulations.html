@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chapter 3 - Formulations and Logic | Orbinex Scala Training</title>
+    <meta
+      name="description"
+      content="Chapter 3 of Orbinex Scala training: scientific formulations, computational mapping, and terminal validation."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <div class="page-backdrop"></div>
+
+    <header class="site-topbar">
+      <a class="site-brand" href="../index.html">
+        <span class="site-brand-mark">Orbinex</span>
+        <span class="site-brand-text">Scala Scientific Training</span>
+      </a>
+      <div class="site-topbar-actions">
+        <a class="action-link" href="https://github.com/galihru/orbinex" target="_blank" rel="noreferrer">Repository</a>
+        <a class="action-link" href="05-quiz.html">Take Quiz</a>
+      </div>
+    </header>
+
+    <div class="book-layout">
+      <aside class="book-sidebar">
+        <label class="search-label" for="chapter-search">Chapter Search</label>
+        <input id="chapter-search" data-chapter-search type="search" placeholder="Find chapter" />
+
+        <nav class="chapter-nav">
+          <ul data-chapter-list>
+            <li><a class="chapter-link" href="../index.html">Home - Training Map</a></li>
+            <li><a class="chapter-link" href="01-overview.html">Chapter 1 - Scientific Overview</a></li>
+            <li><a class="chapter-link" href="02-installation.html">Chapter 2 - Installation and Usage</a></li>
+            <li><a class="chapter-link" href="03-formulations.html">Chapter 3 - Formulations and Logic</a></li>
+            <li><a class="chapter-link" href="04-terminal-sandbox.html">Chapter 4 - Step-by-Step Scala Terminal Lab</a></li>
+            <li><a class="chapter-link" href="05-quiz.html">Chapter 5 - Interactive Quiz and Badge</a></li>
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="book-content">
+        <section>
+          <p class="eyebrow">Chapter 3</p>
+          <h1>Scientific Formulations and Their Scala Logic</h1>
+          <p>
+            Every formula below is mapped to practical computation flow and tested in
+            terminal-oriented examples.
+          </p>
+        </section>
+
+        <section class="grid-two">
+          <article class="info-card">
+            <h2>Core Equations</h2>
+            <pre class="equation-block"><code>F = G * (m1 * m2) / r^2
+v = sqrt((G * M) / r)
+T = 2 * pi * sqrt(a^3 / (G * M))
+a = cbrt((G * M * T^2) / (4 * pi^2))</code></pre>
+          </article>
+
+          <article class="info-card">
+            <h2>Implementation Pattern</h2>
+            <pre class="equation-block"><code>val mu = G * primaryMassKg
+val speed = math.sqrt(mu / orbitalRadiusMeters)
+val period = 2.0 * math.Pi * math.sqrt(math.pow(axis, 3) / mu)</code></pre>
+          </article>
+        </section>
+
+        <section>
+          <h2>Interactive Formula Console</h2>
+          <div class="formula-grid">
+            <label>
+              Primary Mass M (kg)
+              <input id="formula-mass" type="number" value="1.98847e30" step="1e28" />
+            </label>
+            <label>
+              Radius r (m)
+              <input id="formula-radius" type="number" value="1.495978707e11" step="1e9" />
+            </label>
+            <button id="formula-calc-speed" type="button">Compute Circular Speed</button>
+          </div>
+          <p id="formula-speed-output" class="formula-result">Speed output will be shown here.</p>
+
+          <div class="formula-grid two-row">
+            <label>
+              Semi-major axis a (m)
+              <input id="formula-axis" type="number" value="1.495978707e11" step="1e9" />
+            </label>
+            <label>
+              Primary Mass M (kg)
+              <input id="formula-period-mass" type="number" value="1.98847e30" step="1e28" />
+            </label>
+            <button id="formula-calc-period" type="button">Compute Orbital Period</button>
+          </div>
+          <p id="formula-period-output" class="formula-result">Period output will be shown here.</p>
+        </section>
+
+        <section>
+          <h2>Scala Logic Card</h2>
+          <div class="code-card" data-lang="scala">
+            <div class="code-toolbar">
+              <span>Formula to code mapping</span>
+              <div class="toolbar-actions">
+                <button class="icon-btn copy-btn" type="button">Copy</button>
+                <button class="icon-btn run-btn" type="button">Run</button>
+                <button class="icon-btn toggle-btn" type="button">Hide</button>
+              </div>
+            </div>
+            <pre><code>val G = 6.67430e-11
+val M = 1.98847e30
+val r = 1.495978707e11
+
+val speed = math.sqrt((G * M) / r)
+println(f"Speed: $speed%.2f m/s")
+
+val period = 2.0 * math.Pi * math.sqrt(math.pow(r, 3) / (G * M))
+println(f"Period: $period%.2f s")</code></pre>
+            <pre class="run-output hidden"></pre>
+          </div>
+        </section>
+
+        <section>
+          <h2>Formula Validation via Terminal Command</h2>
+          <div class="code-card" data-lang="shell">
+            <div class="code-toolbar">
+              <span>Command simulation</span>
+              <div class="toolbar-actions">
+                <button class="icon-btn copy-btn" type="button">Copy</button>
+                <button class="icon-btn run-btn" type="button">Run</button>
+                <button class="icon-btn toggle-btn" type="button">Hide</button>
+              </div>
+            </div>
+            <pre><code>orbinex formula speed --mass 1.98847e30 --radius 1.495978707e11
+orbinex formula period --mass 1.98847e30 --axis 1.495978707e11</code></pre>
+            <pre class="run-output hidden"></pre>
+          </div>
+        </section>
+
+        <section class="chapter-pagination">
+          <a class="btn btn-ghost" href="02-installation.html">Back: Installation and Usage</a>
+          <a class="btn btn-primary" href="04-terminal-sandbox.html">Next: Step-by-Step Scala Terminal Lab</a>
+        </section>
+      </main>
+    </div>
+
+    <script src="../assets/app.js"></script>
+  </body>
+</html>

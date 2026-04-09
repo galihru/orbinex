@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chapter 4 - Step-by-Step Scala Terminal Lab | Orbinex Scala Training</title>
+    <meta
+      name="description"
+      content="Chapter 4 of Orbinex Scala training: advanced step-by-step terminal sandbox for command practice."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <div class="page-backdrop"></div>
+
+    <header class="site-topbar">
+      <a class="site-brand" href="../index.html">
+        <span class="site-brand-mark">Orbinex</span>
+        <span class="site-brand-text">Scala Scientific Training</span>
+      </a>
+      <div class="site-topbar-actions">
+        <a class="action-link" href="https://github.com/galihru/orbinex" target="_blank" rel="noreferrer">Repository</a>
+        <a class="action-link" href="05-quiz.html">Take Quiz</a>
+      </div>
+    </header>
+
+    <div class="book-layout">
+      <aside class="book-sidebar">
+        <label class="search-label" for="chapter-search">Chapter Search</label>
+        <input id="chapter-search" data-chapter-search type="search" placeholder="Find chapter" />
+
+        <nav class="chapter-nav">
+          <ul data-chapter-list>
+            <li><a class="chapter-link" href="../index.html">Home - Training Map</a></li>
+            <li><a class="chapter-link" href="01-overview.html">Chapter 1 - Scientific Overview</a></li>
+            <li><a class="chapter-link" href="02-installation.html">Chapter 2 - Installation and Usage</a></li>
+            <li><a class="chapter-link" href="03-formulations.html">Chapter 3 - Formulations and Logic</a></li>
+            <li><a class="chapter-link" href="04-terminal-sandbox.html">Chapter 4 - Step-by-Step Scala Terminal Lab</a></li>
+            <li><a class="chapter-link" href="05-quiz.html">Chapter 5 - Interactive Quiz and Badge</a></li>
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="book-content">
+        <section>
+          <p class="eyebrow">Chapter 4</p>
+          <h1>Advanced Scala Terminal Sandbox</h1>
+          <p>
+            This chapter provides a guided lab where each command must be executed in
+            sequence, plus an open sandbox terminal for extra experiments.
+          </p>
+        </section>
+
+        <section class="step-lab" data-step-lab>
+          <div class="step-lab-header">
+            <h2>Guided Step-by-Step Mode</h2>
+            <p data-step-status>Step 1 of 6</p>
+          </div>
+
+          <ol class="step-list" data-step-list>
+            <li data-step-command="pwd">Check current working directory.</li>
+            <li data-step-command="ls">Inspect repository structure.</li>
+            <li data-step-command="./mill.bat __.compile">Compile all modules.</li>
+            <li data-step-command="orbinex formula speed --mass 1.98847e30 --radius 1.495978707e11">Run circular speed calculation.</li>
+            <li data-step-command="orbinex formula period --mass 1.98847e30 --axis 1.495978707e11">Run orbital period calculation.</li>
+            <li data-step-command="orbinex fetch exoplanet --limit 3">Fetch sample exoplanet rows.</li>
+          </ol>
+
+          <div class="step-actions">
+            <button class="btn btn-ghost" type="button" data-step-next>Run Expected Step</button>
+            <button class="btn btn-ghost" type="button" data-step-reset>Reset Lab</button>
+          </div>
+
+          <div class="terminal-shell" data-terminal-instance data-terminal-name="Guided Lab">
+            <div class="terminal-header">
+              <span>Guided Scala Terminal</span>
+            </div>
+            <div class="terminal-history" data-terminal-history></div>
+            <form class="terminal-input-row" data-terminal-form>
+              <span class="prompt">scala@orbinex:$</span>
+              <input data-terminal-input autocomplete="off" placeholder="Type command" />
+            </form>
+            <div class="terminal-shortcuts">
+              <button type="button" class="cmd-shortcut" data-cmd="help">help</button>
+              <button type="button" class="cmd-shortcut" data-cmd="pwd">pwd</button>
+              <button type="button" class="cmd-shortcut" data-cmd="ls">ls</button>
+              <button type="button" class="cmd-shortcut" data-cmd="./mill.bat __.compile">./mill.bat __.compile</button>
+              <button type="button" class="cmd-shortcut" data-cmd="clear">clear</button>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h2>Open Sandbox Mode</h2>
+          <p>
+            Run free-form commands to practice installation flow, formula computation, and
+            data fetch simulation.
+          </p>
+
+          <div class="terminal-shell" data-terminal-instance data-terminal-name="Open Sandbox">
+            <div class="terminal-header">
+              <span>Open Scala Terminal</span>
+            </div>
+            <div class="terminal-history" data-terminal-history></div>
+            <form class="terminal-input-row" data-terminal-form>
+              <span class="prompt">scala@orbinex:$</span>
+              <input data-terminal-input autocomplete="off" placeholder="Try: orbinex formula speed --mass 1.98847e30 --radius 1.495978707e11" />
+            </form>
+            <div class="terminal-shortcuts">
+              <button type="button" class="cmd-shortcut" data-cmd="java -version">java -version</button>
+              <button type="button" class="cmd-shortcut" data-cmd="scala-cli version">scala-cli version</button>
+              <button type="button" class="cmd-shortcut" data-cmd="orbinex formula speed --mass 1.98847e30 --radius 1.495978707e11">formula speed</button>
+              <button type="button" class="cmd-shortcut" data-cmd="orbinex fetch exoplanet --limit 5">fetch exoplanet</button>
+              <button type="button" class="cmd-shortcut" data-cmd="clear">clear</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="chapter-pagination">
+          <a class="btn btn-ghost" href="03-formulations.html">Back: Formulations and Logic</a>
+          <a class="btn btn-primary" href="05-quiz.html">Next: Interactive Quiz and Badge</a>
+        </section>
+      </main>
+    </div>
+
+    <script src="../assets/app.js"></script>
+  </body>
+</html>

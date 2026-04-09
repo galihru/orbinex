@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chapter 1 - Scientific Overview | Orbinex Scala Training</title>
+    <meta
+      name="description"
+      content="Chapter 1 of Orbinex Scala training: scientific scope, architecture, and first execution path."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <div class="page-backdrop"></div>
+
+    <header class="site-topbar">
+      <a class="site-brand" href="../index.html">
+        <span class="site-brand-mark">Orbinex</span>
+        <span class="site-brand-text">Scala Scientific Training</span>
+      </a>
+      <div class="site-topbar-actions">
+        <a class="action-link" href="https://github.com/galihru/orbinex" target="_blank" rel="noreferrer">Repository</a>
+        <a class="action-link" href="05-quiz.html">Take Quiz</a>
+      </div>
+    </header>
+
+    <div class="book-layout">
+      <aside class="book-sidebar">
+        <label class="search-label" for="chapter-search">Chapter Search</label>
+        <input id="chapter-search" data-chapter-search type="search" placeholder="Find chapter" />
+
+        <nav class="chapter-nav">
+          <ul data-chapter-list>
+            <li><a class="chapter-link" href="../index.html">Home - Training Map</a></li>
+            <li><a class="chapter-link" href="01-overview.html">Chapter 1 - Scientific Overview</a></li>
+            <li><a class="chapter-link" href="02-installation.html">Chapter 2 - Installation and Usage</a></li>
+            <li><a class="chapter-link" href="03-formulations.html">Chapter 3 - Formulations and Logic</a></li>
+            <li><a class="chapter-link" href="04-terminal-sandbox.html">Chapter 4 - Step-by-Step Scala Terminal Lab</a></li>
+            <li><a class="chapter-link" href="05-quiz.html">Chapter 5 - Interactive Quiz and Badge</a></li>
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="book-content">
+        <section>
+          <p class="eyebrow">Chapter 1</p>
+          <h1>Scientific Overview and Module Architecture</h1>
+          <p>
+            Orbinex is structured for scientific computing workflows in Scala, especially
+            astronomy simulations that require reproducible formulas and configurable data
+            ingestion.
+          </p>
+        </section>
+
+        <section class="grid-two">
+          <article class="info-card">
+            <h2>Module Roles</h2>
+            <ul>
+              <li><strong>orbinex-core</strong>: deterministic formulas, constants, coordinate transforms.</li>
+              <li><strong>orbinex-fetch</strong>: dynamic HTTP ingestion for exoplanet and agency data.</li>
+              <li><strong>orbinex</strong>: unified facade API for downstream usage.</li>
+            </ul>
+          </article>
+
+          <article class="info-card">
+            <h2>Scientific Scope</h2>
+            <ul>
+              <li>Newtonian gravitational mechanics.</li>
+              <li>Orbital period and semi-major axis conversion.</li>
+              <li>RA/Dec coordinate projection into Cartesian space.</li>
+              <li>Deterministic fallback estimations for incomplete datasets.</li>
+            </ul>
+          </article>
+        </section>
+
+        <section>
+          <h2>Compile Check in Scala Terminal</h2>
+          <p>Practice command flow before moving to installation details.</p>
+          <div class="code-card" data-lang="shell">
+            <div class="code-toolbar">
+              <span>Compile all modules</span>
+              <div class="toolbar-actions">
+                <button class="icon-btn copy-btn" type="button">Copy</button>
+                <button class="icon-btn run-btn" type="button">Run</button>
+                <button class="icon-btn toggle-btn" type="button">Hide</button>
+              </div>
+            </div>
+            <pre><code>git clone https://github.com/galihru/orbinex.git
+cd orbinex
+./mill.bat __.compile</code></pre>
+            <pre class="run-output hidden"></pre>
+          </div>
+        </section>
+
+        <section>
+          <h2>Facade Usage Snapshot</h2>
+          <div class="code-card" data-lang="scala">
+            <div class="code-toolbar">
+              <span>Single-call formula usage</span>
+              <div class="toolbar-actions">
+                <button class="icon-btn copy-btn" type="button">Copy</button>
+                <button class="icon-btn run-btn" type="button">Run</button>
+                <button class="icon-btn toggle-btn" type="button">Hide</button>
+              </div>
+            </div>
+            <pre><code>import io.github.galihru.orbinex.Orbinex
+
+val v = Orbinex.formulas.circularOrbitSpeed(
+  primaryMassKg = Orbinex.constants.SolarMass,
+  orbitalRadiusMeters = Orbinex.constants.AU
+)
+
+println(f"v(1 AU) = $v%.2f m/s")</code></pre>
+            <pre class="run-output hidden"></pre>
+          </div>
+        </section>
+
+        <section class="chapter-pagination">
+          <a class="btn btn-ghost" href="../index.html">Back to Home</a>
+          <a class="btn btn-primary" href="02-installation.html">Next: Installation and Usage</a>
+        </section>
+      </main>
+    </div>
+
+    <script src="../assets/app.js"></script>
+  </body>
+</html>

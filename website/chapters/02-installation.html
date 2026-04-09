@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chapter 2 - Installation and Usage | Orbinex Scala Training</title>
+    <meta
+      name="description"
+      content="Chapter 2 of Orbinex Scala training: installation, dependency usage, and practical terminal commands."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <div class="page-backdrop"></div>
+
+    <header class="site-topbar">
+      <a class="site-brand" href="../index.html">
+        <span class="site-brand-mark">Orbinex</span>
+        <span class="site-brand-text">Scala Scientific Training</span>
+      </a>
+      <div class="site-topbar-actions">
+        <a class="action-link" href="https://github.com/galihru/orbinex" target="_blank" rel="noreferrer">Repository</a>
+        <a class="action-link" href="05-quiz.html">Take Quiz</a>
+      </div>
+    </header>
+
+    <div class="book-layout">
+      <aside class="book-sidebar">
+        <label class="search-label" for="chapter-search">Chapter Search</label>
+        <input id="chapter-search" data-chapter-search type="search" placeholder="Find chapter" />
+
+        <nav class="chapter-nav">
+          <ul data-chapter-list>
+            <li><a class="chapter-link" href="../index.html">Home - Training Map</a></li>
+            <li><a class="chapter-link" href="01-overview.html">Chapter 1 - Scientific Overview</a></li>
+            <li><a class="chapter-link" href="02-installation.html">Chapter 2 - Installation and Usage</a></li>
+            <li><a class="chapter-link" href="03-formulations.html">Chapter 3 - Formulations and Logic</a></li>
+            <li><a class="chapter-link" href="04-terminal-sandbox.html">Chapter 4 - Step-by-Step Scala Terminal Lab</a></li>
+            <li><a class="chapter-link" href="05-quiz.html">Chapter 5 - Interactive Quiz and Badge</a></li>
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="book-content">
+        <section>
+          <p class="eyebrow">Chapter 2</p>
+          <h1>Installation, Dependency Setup, and Runtime Commands</h1>
+          <p>
+            This chapter focuses on practical terminal usage in Scala workflows:
+            install requirements, compile modules, and run examples.
+          </p>
+        </section>
+
+        <section class="grid-two">
+          <article class="info-card">
+            <h2>Requirements</h2>
+            <ul>
+              <li>Java 21 recommended for stable build behavior.</li>
+              <li>Scala 3.8.x ecosystem.</li>
+              <li>Mill build runner included in this repository.</li>
+            </ul>
+          </article>
+
+          <article class="info-card">
+            <h2>Canonical Coordinates</h2>
+            <ul>
+              <li>io.github.galihru:orbinex-core_3</li>
+              <li>io.github.galihru:orbinex-fetch_3</li>
+              <li>io.github.galihru:orbinex_3</li>
+            </ul>
+          </article>
+        </section>
+
+        <section>
+          <h2>From Source Build Path</h2>
+          <div class="code-card" data-lang="shell">
+            <div class="code-toolbar">
+              <span>Build path</span>
+              <div class="toolbar-actions">
+                <button class="icon-btn copy-btn" type="button">Copy</button>
+                <button class="icon-btn run-btn" type="button">Run</button>
+                <button class="icon-btn toggle-btn" type="button">Hide</button>
+              </div>
+            </div>
+            <pre><code>git clone https://github.com/galihru/orbinex.git
+cd orbinex
+java -version
+./mill.bat __.compile</code></pre>
+            <pre class="run-output hidden"></pre>
+          </div>
+        </section>
+
+        <section>
+          <h2>Scala CLI Example Project</h2>
+          <div class="code-card" data-lang="shell">
+            <div class="code-toolbar">
+              <span>Consumer application commands</span>
+              <div class="toolbar-actions">
+                <button class="icon-btn copy-btn" type="button">Copy</button>
+                <button class="icon-btn run-btn" type="button">Run</button>
+                <button class="icon-btn toggle-btn" type="button">Hide</button>
+              </div>
+            </div>
+            <pre><code>scala-cli new . --scala 3.8.1
+scala-cli run Main.scala --dep io.github.galihru:orbinex_3:0.1.0</code></pre>
+            <pre class="run-output hidden"></pre>
+          </div>
+        </section>
+
+        <section>
+          <h2>Minimal Runtime Code</h2>
+          <div class="code-card" data-lang="scala">
+            <div class="code-toolbar">
+              <span>Compute orbital speed</span>
+              <div class="toolbar-actions">
+                <button class="icon-btn copy-btn" type="button">Copy</button>
+                <button class="icon-btn run-btn" type="button">Run</button>
+                <button class="icon-btn toggle-btn" type="button">Hide</button>
+              </div>
+            </div>
+            <pre><code>import io.github.galihru.orbinex.Orbinex
+
+@main def runOrbinexDemo(): Unit = {
+  val speed = Orbinex.formulas.circularOrbitSpeed(
+    primaryMassKg = Orbinex.constants.SolarMass,
+    orbitalRadiusMeters = Orbinex.constants.AU
+  )
+
+  println(f"Circular speed = $speed%.2f m/s")
+}</code></pre>
+            <pre class="run-output hidden"></pre>
+          </div>
+        </section>
+
+        <section class="chapter-pagination">
+          <a class="btn btn-ghost" href="01-overview.html">Back: Scientific Overview</a>
+          <a class="btn btn-primary" href="03-formulations.html">Next: Formulations and Logic</a>
+        </section>
+      </main>
+    </div>
+
+    <script src="../assets/app.js"></script>
+  </body>
+</html>

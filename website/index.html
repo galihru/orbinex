@@ -3,112 +3,109 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Orbinex Training</title>
+    <title>Orbinex Scala Training Book</title>
     <meta
       name="description"
-      content="Interactive Orbinex tutorial website with runnable code cards and terminal simulation."
+      content="Interactive Orbinex Scala training with chapter navigation, scientific formula labs, terminal sandbox, and quiz mode."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="assets/styles.css" />
   </head>
   <body>
-    <div class="bg-layer"></div>
+    <div class="page-backdrop"></div>
 
-    <header class="topbar">
-      <div class="brand">
-        <span class="brand-badge">Orbinex</span>
-        <div>
-          <h1>Scientific Training</h1>
-          <p>Interactive tutorial inspired by workshop-style documentation.</p>
-        </div>
+    <header class="site-topbar">
+      <a class="site-brand" href="index.html">
+        <span class="site-brand-mark">Orbinex</span>
+        <span class="site-brand-text">Scala Scientific Training</span>
+      </a>
+      <div class="site-topbar-actions">
+        <a class="action-link" href="https://github.com/galihru/orbinex" target="_blank" rel="noreferrer">Repository</a>
+        <a class="action-link" href="chapters/05-quiz.html">Take Quiz</a>
       </div>
-      <a class="repo-link" href="https://github.com/galihru/orbinex" target="_blank" rel="noreferrer">Open Repository</a>
     </header>
 
-    <div class="layout">
-      <aside class="sidebar">
-        <div class="search-wrap">
-          <input id="chapter-search" type="search" placeholder="Search chapter" />
-        </div>
-        <nav>
-          <ul id="chapter-list">
-            <li><a href="#chapter-start">1. Start Here</a></li>
-            <li><a href="#chapter-install">2. Installation</a></li>
-            <li><a href="#chapter-formula">3. Formula Lab</a></li>
-            <li><a href="#chapter-api">4. API Tutorial</a></li>
-            <li><a href="#chapter-terminal">5. Terminal Lab</a></li>
-            <li><a href="#chapter-rust-style">6. Rust Style Code Card</a></li>
+    <div class="book-layout">
+      <aside class="book-sidebar">
+        <label class="search-label" for="chapter-search">Chapter Search</label>
+        <input id="chapter-search" data-chapter-search type="search" placeholder="Find chapter" />
+
+        <nav class="chapter-nav">
+          <ul data-chapter-list>
+            <li><a class="chapter-link" href="index.html">Home - Training Map</a></li>
+            <li><a class="chapter-link" href="chapters/01-overview.html">Chapter 1 - Scientific Overview</a></li>
+            <li><a class="chapter-link" href="chapters/02-installation.html">Chapter 2 - Installation and Usage</a></li>
+            <li><a class="chapter-link" href="chapters/03-formulations.html">Chapter 3 - Formulations and Logic</a></li>
+            <li><a class="chapter-link" href="chapters/04-terminal-sandbox.html">Chapter 4 - Step-by-Step Scala Terminal Lab</a></li>
+            <li><a class="chapter-link" href="chapters/05-quiz.html">Chapter 5 - Interactive Quiz and Badge</a></li>
           </ul>
         </nav>
+
+        <div class="sidebar-panel">
+          <h3>Program Outcome</h3>
+          <p>
+            Complete all chapters to learn installation, formula implementation,
+            terminal execution flow, and scientific reasoning with Orbinex.
+          </p>
+        </div>
       </aside>
 
-      <main class="content">
-        <section id="chapter-start" data-title="start here">
-          <h2>Start Here</h2>
+      <main class="book-content">
+        <section class="hero-card">
+          <p class="eyebrow">Training Book</p>
+          <h1>Orbinex Scala Scientific Training</h1>
           <p>
-            This site is designed as a training path. You can read chapter by chapter,
-            run sample snippets, and simulate command-line workflows directly in the page.
+            This training portal follows a chapter structure similar to workshop books:
+            read, run command blocks, validate formulas, and practice with interactive
+            terminal and quiz modules.
           </p>
-          <div class="callout">
-            <h3>Training Goals</h3>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="chapters/01-overview.html">Start Chapter 1</a>
+            <a class="btn btn-ghost" href="chapters/04-terminal-sandbox.html">Open Terminal Sandbox</a>
+          </div>
+        </section>
+
+        <section class="grid-two">
+          <article class="info-card">
+            <h2>What You Will Practice</h2>
             <ul>
-              <li>Understand module boundaries: core, fetch, and facade.</li>
-              <li>Practice formula validation with deterministic parameters.</li>
-              <li>Rehearse terminal workflows before running real commands.</li>
+              <li>Compile and run Orbinex modules using Scala-oriented commands.</li>
+              <li>Apply scientific formulas in computational logic.</li>
+              <li>Execute guided terminal steps with progressive validation.</li>
+              <li>Take randomized quiz questions plus terminal-based practical tasks.</li>
             </ul>
-          </div>
+          </article>
+
+          <article class="info-card">
+            <h2>Core Formula Example</h2>
+            <p class="muted">Circular orbit speed used by Orbinex:</p>
+            <pre class="equation-block"><code>v = sqrt((G * M) / r)</code></pre>
+            <p class="muted">
+              Where <strong>G</strong> is the gravitational constant,
+              <strong>M</strong> is primary mass, and <strong>r</strong> is orbital radius.
+            </p>
+          </article>
         </section>
 
-        <section id="chapter-install" data-title="installation">
-          <h2>Installation</h2>
-          <p>Use Java 21 and compile modules with Mill.</p>
-          <div class="code-card" data-lang="shell">
-            <div class="code-toolbar">
-              <span>Quick Start</span>
-              <div class="toolbar-actions">
-                <button class="icon-btn copy-btn" type="button" title="Copy">Copy</button>
-                <button class="icon-btn run-btn" type="button" title="Run">Run</button>
-                <button class="icon-btn toggle-btn" type="button" title="Toggle Output">Hide</button>
-              </div>
-            </div>
-            <pre><code>git clone https://github.com/galihru/orbinex.git
-cd orbinex
-./mill.bat __.compile</code></pre>
-            <pre class="run-output hidden"></pre>
-          </div>
-        </section>
+        <section>
+          <h2>Quick Scala Run Card</h2>
+          <p>
+            Use the toolbar actions to copy, run, and inspect output exactly like a
+            workshop playground.
+          </p>
 
-        <section id="chapter-formula" data-title="formula lab">
-          <h2>Formula Lab</h2>
-          <p>Compute circular orbit speed using the same equation used in Orbinex.</p>
-          <div class="formula-grid">
-            <label>
-              Primary Mass (kg)
-              <input id="mass-input" type="number" value="1.98847e30" step="1e28" />
-            </label>
-            <label>
-              Orbital Radius (m)
-              <input id="radius-input" type="number" value="1.495978707e11" step="1e9" />
-            </label>
-            <button id="compute-speed" type="button">Compute Speed</button>
-          </div>
-          <p id="formula-result" class="formula-result">Result will appear here.</p>
-        </section>
-
-        <section id="chapter-api" data-title="api tutorial">
-          <h2>API Tutorial</h2>
           <div class="code-card" data-lang="scala">
             <div class="code-toolbar">
-              <span>Facade API Example</span>
+              <span>Facade API: Circular Orbit Speed</span>
               <div class="toolbar-actions">
-                <button class="icon-btn copy-btn" type="button" title="Copy">Copy</button>
-                <button class="icon-btn run-btn" type="button" title="Run">Run</button>
-                <button class="icon-btn toggle-btn" type="button" title="Toggle Output">Hide</button>
+                <button class="icon-btn copy-btn" type="button">Copy</button>
+                <button class="icon-btn run-btn" type="button">Run</button>
+                <button class="icon-btn toggle-btn" type="button">Hide</button>
               </div>
             </div>
             <pre><code>import io.github.galihru.orbinex.Orbinex
@@ -118,65 +115,14 @@ val speed = Orbinex.formulas.circularOrbitSpeed(
   orbitalRadiusMeters = Orbinex.constants.AU
 )
 
-println(f"Speed at 1 AU: $speed%.2f m/s")</code></pre>
+println(f"Circular speed at 1 AU: $speed%.2f m/s")</code></pre>
             <pre class="run-output hidden"></pre>
           </div>
         </section>
 
-        <section id="chapter-terminal" data-title="terminal lab">
-          <h2>Terminal Lab</h2>
-          <p>Try commands in this simulated terminal to learn expected output quickly.</p>
-
-          <div class="terminal-wrap">
-            <div id="terminal-history" class="terminal-history"></div>
-            <form id="terminal-form" class="terminal-input-row">
-              <span class="prompt">orbinex@lab:$</span>
-              <input id="terminal-input" autocomplete="off" placeholder="Type help" />
-            </form>
-            <div class="terminal-shortcuts">
-              <button type="button" class="cmd-shortcut" data-cmd="help">help</button>
-              <button type="button" class="cmd-shortcut" data-cmd="./mill.bat __.compile">./mill.bat __.compile</button>
-              <button type="button" class="cmd-shortcut" data-cmd="orbinex demo speed">orbinex demo speed</button>
-              <button type="button" class="cmd-shortcut" data-cmd="clear">clear</button>
-            </div>
-          </div>
-        </section>
-
-        <section id="chapter-rust-style" data-title="rust style code card">
-          <h2>The Rust Solution: Enum Dispatch</h2>
-          <p>
-            This tutorial card mirrors the workflow style from Rust training pages,
-            including copy and run actions.
-          </p>
-
-          <div class="code-card" data-lang="rust">
-            <div class="code-toolbar">
-              <span>Rust Example</span>
-              <div class="toolbar-actions">
-                <button class="icon-btn copy-btn" type="button" title="Copy">Copy</button>
-                <button class="icon-btn run-btn" type="button" title="Run">Run</button>
-                <button class="icon-btn toggle-btn" type="button" title="Toggle Output">Hide</button>
-              </div>
-            </div>
-            <pre><code>#[derive(Debug, Clone, PartialEq, Eq)]
-pub enum GpuEventKind {
-    PcieDegrade,
-    PcieFatal,
-    PcieUncorr,
-    Boot,
-    BaseboardState,
-    EccError,
-    OverTemp,
-    PowerRail,
-    ErotStatus,
-    Unknown,
-}
-
-fn main() {
-    println!("{:?}", GpuEventKind::Boot);
-}</code></pre>
-            <pre class="run-output hidden"></pre>
-          </div>
+        <section class="pager-card">
+          <span>Next Chapter</span>
+          <a href="chapters/01-overview.html">Go to Chapter 1 - Scientific Overview</a>
         </section>
       </main>
     </div>
