@@ -6,9 +6,6 @@ on:
       - main
     tags:
       - "v*"
-    paths:
-      - orbinex-modules/**
-      - .github/workflows/publish-sonatype-central.yml
   workflow_dispatch:
 
 permissions:

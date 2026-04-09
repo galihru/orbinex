@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - orbinex-modules/**
-      - .github/workflows/publish-github-packages.yml
   workflow_dispatch:
 
 permissions:
