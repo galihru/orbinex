@@ -42,7 +42,7 @@ jobs:
 
     steps:
       - name: Open Draft Advisory
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const summary = core.getInput("summary", { required: true }).trim();
