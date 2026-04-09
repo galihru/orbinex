@@ -1,0 +1,52 @@
+{
+  "name": "@galihru/orbinex",
+  "version": "0.1.0",
+  "description": "Orbinex scientific formulas and simulation helpers for web and Node.js applications.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Galih Ridho Utomo",
+  "homepage": "https://github.com/galihru/orbinex#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/galihru/orbinex.git",
+    "directory": "orbinex-npm"
+  },
+  "bugs": {
+    "url": "https://github.com/galihru/orbinex/issues"
+  },
+  "keywords": [
+    "scala",
+    "astronomy",
+    "orbital-mechanics",
+    "simulation",
+    "scientific-computing",
+    "typescript"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --dts --format esm,cjs --clean",
+    "lint": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.3"
+  }
+}
