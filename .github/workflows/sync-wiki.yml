@@ -4,13 +4,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - README.md
-      - CONTRIBUTING.md
-      - CITATION.cff
-      - docs/**
-      - .github/CODE_OF_CONDUCT.md
-      - .github/SECURITY.md
   workflow_dispatch:
 
 permissions:

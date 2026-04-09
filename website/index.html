@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Orbinex Training</title>
+    <meta
+      name="description"
+      content="Interactive Orbinex tutorial website with runnable code cards and terminal simulation."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+    <div class="bg-layer"></div>
+
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-badge">Orbinex</span>
+        <div>
+          <h1>Scientific Training</h1>
+          <p>Interactive tutorial inspired by workshop-style documentation.</p>
+        </div>
+      </div>
+      <a class="repo-link" href="https://github.com/galihru/orbinex" target="_blank" rel="noreferrer">Open Repository</a>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="search-wrap">
+          <input id="chapter-search" type="search" placeholder="Search chapter" />
+        </div>
+        <nav>
+          <ul id="chapter-list">
+            <li><a href="#chapter-start">1. Start Here</a></li>
+            <li><a href="#chapter-install">2. Installation</a></li>
+            <li><a href="#chapter-formula">3. Formula Lab</a></li>
+            <li><a href="#chapter-api">4. API Tutorial</a></li>
+            <li><a href="#chapter-terminal">5. Terminal Lab</a></li>
+            <li><a href="#chapter-rust-style">6. Rust Style Code Card</a></li>
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="content">
+        <section id="chapter-start" data-title="start here">
+          <h2>Start Here</h2>
+          <p>
+            This site is designed as a training path. You can read chapter by chapter,
+            run sample snippets, and simulate command-line workflows directly in the page.
+          </p>
+          <div class="callout">
+            <h3>Training Goals</h3>
+            <ul>
+              <li>Understand module boundaries: core, fetch, and facade.</li>
+              <li>Practice formula validation with deterministic parameters.</li>
+              <li>Rehearse terminal workflows before running real commands.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="chapter-install" data-title="installation">
+          <h2>Installation</h2>
+          <p>Use Java 21 and compile modules with Mill.</p>
+          <div class="code-card" data-lang="shell">
+            <div class="code-toolbar">
+              <span>Quick Start</span>
+              <div class="toolbar-actions">
+                <button class="icon-btn copy-btn" type="button" title="Copy">Copy</button>
+                <button class="icon-btn run-btn" type="button" title="Run">Run</button>
+                <button class="icon-btn toggle-btn" type="button" title="Toggle Output">Hide</button>
+              </div>
+            </div>
+            <pre><code>git clone https://github.com/galihru/orbinex.git
+cd orbinex
+./mill.bat __.compile</code></pre>
+            <pre class="run-output hidden"></pre>
+          </div>
+        </section>
+
+        <section id="chapter-formula" data-title="formula lab">
+          <h2>Formula Lab</h2>
+          <p>Compute circular orbit speed using the same equation used in Orbinex.</p>
+          <div class="formula-grid">
+            <label>
+              Primary Mass (kg)
+              <input id="mass-input" type="number" value="1.98847e30" step="1e28" />
+            </label>
+            <label>
+              Orbital Radius (m)
+              <input id="radius-input" type="number" value="1.495978707e11" step="1e9" />
+            </label>
+            <button id="compute-speed" type="button">Compute Speed</button>
+          </div>
+          <p id="formula-result" class="formula-result">Result will appear here.</p>
+        </section>
+
+        <section id="chapter-api" data-title="api tutorial">
+          <h2>API Tutorial</h2>
+          <div class="code-card" data-lang="scala">
+            <div class="code-toolbar">
+              <span>Facade API Example</span>
+              <div class="toolbar-actions">
+                <button class="icon-btn copy-btn" type="button" title="Copy">Copy</button>
+                <button class="icon-btn run-btn" type="button" title="Run">Run</button>
+                <button class="icon-btn toggle-btn" type="button" title="Toggle Output">Hide</button>
+              </div>
+            </div>
+            <pre><code>import io.github.galihru.orbinex.Orbinex
+
+val speed = Orbinex.formulas.circularOrbitSpeed(
+  primaryMassKg = Orbinex.constants.SolarMass,
+  orbitalRadiusMeters = Orbinex.constants.AU
+)
+
+println(f"Speed at 1 AU: $speed%.2f m/s")</code></pre>
+            <pre class="run-output hidden"></pre>
+          </div>
+        </section>
+
+        <section id="chapter-terminal" data-title="terminal lab">
+          <h2>Terminal Lab</h2>
+          <p>Try commands in this simulated terminal to learn expected output quickly.</p>
+
+          <div class="terminal-wrap">
+            <div id="terminal-history" class="terminal-history"></div>
+            <form id="terminal-form" class="terminal-input-row">
+              <span class="prompt">orbinex@lab:$</span>
+              <input id="terminal-input" autocomplete="off" placeholder="Type help" />
+            </form>
+            <div class="terminal-shortcuts">
+              <button type="button" class="cmd-shortcut" data-cmd="help">help</button>
+              <button type="button" class="cmd-shortcut" data-cmd="./mill.bat __.compile">./mill.bat __.compile</button>
+              <button type="button" class="cmd-shortcut" data-cmd="orbinex demo speed">orbinex demo speed</button>
+              <button type="button" class="cmd-shortcut" data-cmd="clear">clear</button>
+            </div>
+          </div>
+        </section>
+
+        <section id="chapter-rust-style" data-title="rust style code card">
+          <h2>The Rust Solution: Enum Dispatch</h2>
+          <p>
+            This tutorial card mirrors the workflow style from Rust training pages,
+            including copy and run actions.
+          </p>
+
+          <div class="code-card" data-lang="rust">
+            <div class="code-toolbar">
+              <span>Rust Example</span>
+              <div class="toolbar-actions">
+                <button class="icon-btn copy-btn" type="button" title="Copy">Copy</button>
+                <button class="icon-btn run-btn" type="button" title="Run">Run</button>
+                <button class="icon-btn toggle-btn" type="button" title="Toggle Output">Hide</button>
+              </div>
+            </div>
+            <pre><code>#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum GpuEventKind {
+    PcieDegrade,
+    PcieFatal,
+    PcieUncorr,
+    Boot,
+    BaseboardState,
+    EccError,
+    OverTemp,
+    PowerRail,
+    ErotStatus,
+    Unknown,
+}
+
+fn main() {
+    println!("{:?}", GpuEventKind::Boot);
+}</code></pre>
+            <pre class="run-output hidden"></pre>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="assets/app.js"></script>
+  </body>
+</html>

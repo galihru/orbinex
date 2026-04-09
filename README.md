@@ -30,6 +30,12 @@ Installation methods and dependency coordinates are documented in [docs/INSTALLA
 
 Usage patterns and API examples are documented in [docs/USAGE.md](docs/USAGE.md).
 
+## Training Website
+
+Interactive tutorial website (RustTraining-inspired layout with runnable cards and terminal lab) is located in [website](website).
+
+Deployment is automated via GitHub Pages workflow on push to `main` when website or docs files change.
+
 ## Dependency inventory
 
 Complete dependency inventory is documented in [docs/DEPENDENCIES.md](docs/DEPENDENCIES.md).
@@ -57,6 +63,7 @@ Security model, network safety notes, and operational recommendations are docume
 - Automated release creation:
   - `dev-latest` prerelease on each push to `main`
   - stable release on pushed tags matching `v*`
+- Automated training website deployment to GitHub Pages.
 
 ## License
 
