@@ -2,11 +2,14 @@ name: Publish Orbinex to Sonatype Central
 
 on:
   push:
-    branches:
-      - main
     tags:
       - "v*"
   workflow_dispatch:
+    inputs:
+      version:
+        description: "Release version (e.g. 0.1.1)"
+        required: true
+        type: string
 
 permissions:
   contents: read
@@ -15,7 +18,7 @@ jobs:
   publish-sonatype-central:
     runs-on: windows-latest
     env:
-      ORBINEX_BASE_VERSION: 0.1.0
+      ORBINEX_MANUAL_VERSION: ${{ github.event.inputs.version }}
 
     steps:
       - name: Checkout
@@ -43,15 +46,14 @@ jobs:
             } else {
               $version = $tag
             }
+          } else {
+            $version = "$env:ORBINEX_MANUAL_VERSION"
+            if ([string]::IsNullOrWhiteSpace($version)) {
+              throw "Manual dispatch requires input 'version'."
+            }
+          }
 
-            "ORBINEX_PUBLISH_VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-            "ORBINEX_RELEASE_KIND=release" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-          }
-          else {
-            $version = "$env:ORBINEX_BASE_VERSION-SNAPSHOT"
-            "ORBINEX_PUBLISH_VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-            "ORBINEX_RELEASE_KIND=snapshot" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-          }
+          "ORBINEX_PUBLISH_VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
       - name: Publish to Sonatype Central
         shell: pwsh
@@ -63,10 +65,4 @@ jobs:
           MILL_PGP_PASSPHRASE: ${{ secrets.MILL_PGP_PASSPHRASE }}
         run: |
           $bundle = "io.github.galihru-orbinex-$env:ORBINEX_PUBLISH_VERSION"
-
-          if ($env:ORBINEX_RELEASE_KIND -eq "snapshot") {
-            .\mill.bat mill.javalib.SonatypeCentralPublishModule/publishAll --publishArtifacts __.publishArtifacts --shouldRelease false
-          }
-          else {
-            .\mill.bat mill.javalib.SonatypeCentralPublishModule/publishAll --publishArtifacts __.publishArtifacts --bundleName $bundle --shouldRelease true
-          }
+          .\mill.bat mill.javalib.SonatypeCentralPublishModule/publishAll --publishArtifacts __.publishArtifacts --bundleName $bundle --shouldRelease true
