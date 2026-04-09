@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+title: "Orbinex Scientific Scala Modules"
+message: "If you use Orbinex in research or publications, please cite it as below."
+type: software
+authors:
+  - family-names: Utomo
+    given-names: Galih Ridho
+repository-code: "https://github.com/galihru/orbinex"
+url: "https://github.com/galihru/orbinex"
+license: MIT
+version: "0.1.0"
+date-released: "2026-04-09"
+keywords:
+  - scala
+  - astronomy
+  - orbital-mechanics
+  - exoplanet
+  - scientific-computing
+preferred-citation:
+  type: software
+  authors:
+    - family-names: Utomo
+      given-names: Galih Ridho
+  title: "Orbinex Scientific Scala Modules"
+  version: "0.1.0"
+  date-released: "2026-04-09"
+  url: "https://github.com/galihru/orbinex"

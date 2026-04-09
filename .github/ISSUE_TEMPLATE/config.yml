@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Community Discussions
+    url: https://github.com/galihru/orbinex/discussions
+    about: Ask questions, share ideas, and connect with the community.
+  - name: Security Reports
+    url: https://github.com/galihru/orbinex/security/policy
+    about: Report vulnerabilities privately using the security policy guidance.

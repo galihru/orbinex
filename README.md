@@ -38,6 +38,26 @@ Complete dependency inventory is documented in [docs/DEPENDENCIES.md](docs/DEPEN
 
 Security model, network safety notes, and operational recommendations are documented in [docs/SECURITY.md](docs/SECURITY.md).
 
+## Community and Governance
+
+- Code of Conduct: [.github/CODE_OF_CONDUCT.md](.github/CODE_OF_CONDUCT.md)
+- Contributing Guidelines: [CONTRIBUTING.md](CONTRIBUTING.md)
+- Security Policy: [.github/SECURITY.md](.github/SECURITY.md)
+- Citation Metadata: [CITATION.cff](CITATION.cff)
+- Issue Templates: [.github/ISSUE_TEMPLATE](.github/ISSUE_TEMPLATE)
+- Pull Request Template: [.github/pull_request_template.md](.github/pull_request_template.md)
+- Discussion Template: [.github/DISCUSSION_TEMPLATE/general.yml](.github/DISCUSSION_TEMPLATE/general.yml)
+
+## Automation
+
+- GitHub Packages publish on each push to `main`.
+- Sonatype Central publish on release tags (`v*`) or manual dispatch.
+- Automated discussion creation on changes to `main`.
+- Automated wiki synchronization from `README.md`, `docs/`, and governance docs.
+- Automated release creation:
+  - `dev-latest` prerelease on each push to `main`
+  - stable release on pushed tags matching `v*`
+
 ## License
 
 This module set is released under the MIT License. See [LICENSE](LICENSE).

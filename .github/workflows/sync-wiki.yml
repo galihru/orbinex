@@ -1,0 +1,83 @@
+name: Sync Wiki
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - README.md
+      - CONTRIBUTING.md
+      - CITATION.cff
+      - docs/**
+      - .github/CODE_OF_CONDUCT.md
+      - .github/SECURITY.md
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync-wiki:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Prepare Wiki Repository
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          WIKI_URL="https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.wiki.git"
+          if git ls-remote "$WIKI_URL" >/dev/null 2>&1; then
+            git clone "$WIKI_URL" wiki
+          else
+            mkdir -p wiki
+            cd wiki
+            git init
+            git remote add origin "$WIKI_URL"
+            cd ..
+          fi
+
+      - name: Generate Wiki Pages
+        run: |
+          cp README.md wiki/Home.md
+          cp CONTRIBUTING.md wiki/Contributing.md
+          cp .github/CODE_OF_CONDUCT.md wiki/Code-of-Conduct.md
+          cp .github/SECURITY.md wiki/Security-Policy.md
+          cp CITATION.cff wiki/Citation.cff
+
+          for file in docs/*.md; do
+            name=$(basename "$file")
+            cp "$file" "wiki/${name}"
+          done
+
+          cat > wiki/_Sidebar.md <<'EOF'
+          - [Home](Home)
+          - [Contributing](Contributing)
+          - [Code of Conduct](Code-of-Conduct)
+          - [Security Policy](Security-Policy)
+          - [Citation](Citation)
+          - [Dependencies](DEPENDENCIES)
+          - [Formulations](FORMULATIONS)
+          - [Installation](INSTALLATION)
+          - [Integration](INTEGRATION)
+          - [References](REFERENCES)
+          - [Usage](USAGE)
+          EOF
+
+      - name: Commit and Push Wiki
+        run: |
+          cd wiki
+          git add .
+          if git diff --staged --quiet; then
+            echo "No wiki changes to publish."
+            exit 0
+          fi
+          git commit -m "docs(wiki): sync from ${GITHUB_SHA::7}"
+          git push origin HEAD:master

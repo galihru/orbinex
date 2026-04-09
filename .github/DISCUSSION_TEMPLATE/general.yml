@@ -1,0 +1,31 @@
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 👋 Welcome!
+        We are using Discussions as a place to connect with other members of our community.
+        We hope that you:
+        - Ask questions you are wondering about.
+        - Share ideas.
+        - Engage with other community members.
+        - Welcome others and stay open-minded. Remember that this is a community we build together.
+
+        To get started, introduce yourself and tell us what you do with this community.
+
+  - type: input
+    id: intro
+    attributes:
+      label: Short introduction
+      description: Who are you and what are you working on?
+      placeholder: I am ... and I use Orbinex for ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: details
+    attributes:
+      label: Discussion details
+      description: Share your question, idea, or context.
+      placeholder: Write your topic here.
+    validations:
+      required: true

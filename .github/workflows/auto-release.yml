@@ -1,0 +1,47 @@
+name: Auto Release
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create or Update Development Release
+        if: github.ref == 'refs/heads/main'
+        uses: ncipollo/release-action@v1
+        with:
+          tag: dev-latest
+          name: "Orbinex Dev Latest"
+          body: |
+            Automated prerelease generated from the latest main branch changes.
+
+            - Commit: ${{ github.sha }}
+            - Workflow Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          prerelease: true
+          allowUpdates: true
+          removeArtifacts: true
+          makeLatest: false
+          commit: ${{ github.sha }}
+
+      - name: Create or Update Stable Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ github.ref_name }}
+          name: "Orbinex ${{ github.ref_name }}"
+          generateReleaseNotes: true
+          allowUpdates: true
+          prerelease: false

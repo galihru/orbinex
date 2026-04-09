@@ -1,0 +1,157 @@
+name: Auto Discussion
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  discussions: write
+
+jobs:
+  auto-discussion:
+    runs-on: ubuntu-latest
+    env:
+      ANNOUNCEMENTS_CATEGORY_ID: DIC_kwDOR9k-Us4C6axZ
+      GENERAL_CATEGORY_ID: DIC_kwDOR9k-Us4C6axa
+
+    steps:
+      - name: Ensure Welcome Discussion Exists
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const generalCategoryId = process.env.GENERAL_CATEGORY_ID;
+            const welcomeTitle = "👋 Welcome!";
+
+            const query = `
+              query($owner: String!, $repo: String!) {
+                repository(owner: $owner, name: $repo) {
+                  id
+                  discussions(first: 50, orderBy: { field: CREATED_AT, direction: DESC }) {
+                    nodes {
+                      title
+                      url
+                    }
+                  }
+                }
+              }
+            `;
+
+            const data = await github.graphql(query, { owner, repo });
+            const repositoryId = data.repository.id;
+            const existing = data.repository.discussions.nodes.find((d) => d.title === welcomeTitle);
+
+            if (existing) {
+              core.info(`Welcome discussion already exists: ${existing.url}`);
+              return;
+            }
+
+            const body = `## 👋 Welcome!
+            We are using Discussions as a place to connect with other members of our community. We hope that you:
+            - Ask questions you are wondering about.
+            - Share ideas.
+            - Engage with other community members.
+            - Welcome others and are open-minded. Remember that this is a community we build together.
+
+            To get started, comment below with an introduction of yourself and tell us about what you do with this community.`;
+
+            const mutation = `
+              mutation($repositoryId: ID!, $categoryId: ID!, $title: String!, $body: String!) {
+                createDiscussion(input: {
+                  repositoryId: $repositoryId,
+                  categoryId: $categoryId,
+                  title: $title,
+                  body: $body
+                }) {
+                  discussion {
+                    url
+                  }
+                }
+              }
+            `;
+
+            const created = await github.graphql(mutation, {
+              repositoryId,
+              categoryId: generalCategoryId,
+              title: welcomeTitle,
+              body,
+            });
+
+            core.info(`Created welcome discussion: ${created.createDiscussion.discussion.url}`);
+
+      - name: Create Changelog Discussion for Push
+        if: github.event_name == 'push'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const announcementsCategoryId = process.env.ANNOUNCEMENTS_CATEGORY_ID;
+            const after = context.payload.after;
+            const before = context.payload.before;
+            const shortAfter = (after || '').substring(0, 7);
+
+            const commits = context.payload.commits || [];
+            const commitLines = commits.slice(0, 20).map((c) => {
+              const msg = (c.message || '').split('\n')[0];
+              const author = c.author?.username || c.author?.name || 'unknown';
+              return `- ${c.id.substring(0, 7)} ${msg} (@${author})`;
+            });
+
+            let compareUrl;
+            if (before && !/^0+$/.test(before)) {
+              compareUrl = `https://github.com/${owner}/${repo}/compare/${before}...${after}`;
+            } else {
+              compareUrl = `https://github.com/${owner}/${repo}/commit/${after}`;
+            }
+
+            const title = `Auto Update ${shortAfter}`;
+            const body = [
+              `Automated update discussion for commit ${shortAfter}.`,
+              '',
+              `- Branch: ${context.ref.replace('refs/heads/', '')}`,
+              `- Compare/Commit: ${compareUrl}`,
+              `- Actor: @${context.actor}`,
+              '',
+              '### Included commits',
+              commitLines.length ? commitLines.join('\n') : '- No commit details available',
+            ].join('\n');
+
+            const query = `
+              query($owner: String!, $repo: String!) {
+                repository(owner: $owner, name: $repo) {
+                  id
+                }
+              }
+            `;
+
+            const data = await github.graphql(query, { owner, repo });
+            const repositoryId = data.repository.id;
+
+            const mutation = `
+              mutation($repositoryId: ID!, $categoryId: ID!, $title: String!, $body: String!) {
+                createDiscussion(input: {
+                  repositoryId: $repositoryId,
+                  categoryId: $categoryId,
+                  title: $title,
+                  body: $body
+                }) {
+                  discussion {
+                    url
+                  }
+                }
+              }
+            `;
+
+            const created = await github.graphql(mutation, {
+              repositoryId,
+              categoryId: announcementsCategoryId,
+              title,
+              body,
+            });
+
+            core.info(`Created changelog discussion: ${created.createDiscussion.discussion.url}`);
