@@ -30,21 +30,21 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Prepare Wiki Repository
+        id: prepare_wiki
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           WIKI_URL="https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.wiki.git"
           if git ls-remote "$WIKI_URL" >/dev/null 2>&1; then
             git clone "$WIKI_URL" wiki
+            echo "wiki_available=true" >> "$GITHUB_OUTPUT"
           else
-            mkdir -p wiki
-            cd wiki
-            git init
-            git remote add origin "$WIKI_URL"
-            cd ..
+            echo "wiki_available=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::Wiki repository is not initialized yet. Open the Wiki tab once in GitHub UI, then rerun this workflow."
           fi
 
       - name: Generate Wiki Pages
+        if: steps.prepare_wiki.outputs.wiki_available == 'true'
         run: |
           cp README.md wiki/Home.md
           cp CONTRIBUTING.md wiki/Contributing.md
@@ -72,6 +72,7 @@ jobs:
           EOF
 
       - name: Commit and Push Wiki
+        if: steps.prepare_wiki.outputs.wiki_available == 'true'
         run: |
           cd wiki
           git add .
