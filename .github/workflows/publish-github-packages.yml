@@ -1,0 +1,52 @@
+name: Publish Orbinex to GitHub Packages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - orbinex-modules/**
+      - .github/workflows/publish-github-packages.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  publish-github-packages:
+    runs-on: windows-latest
+    env:
+      ORBINEX_BASE_VERSION: 0.1.0
+      GH_MAVEN_REPO: ${{ vars.GH_MAVEN_REPO }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - name: Compute Publish Version
+        shell: pwsh
+        run: |
+          $short = if ($env:GITHUB_SHA.Length -ge 7) { $env:GITHUB_SHA.Substring(0, 7) } else { "local" }
+          $version = "$env:ORBINEX_BASE_VERSION-dev.$env:GITHUB_RUN_NUMBER.$short"
+          "ORBINEX_PUBLISH_VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
+          if ([string]::IsNullOrWhiteSpace($env:GH_MAVEN_REPO)) {
+            "GH_MAVEN_REPO=$env:GITHUB_REPOSITORY" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          }
+
+      - name: Publish to GitHub Packages
+        shell: pwsh
+        working-directory: orbinex-modules
+        env:
+          MILL_MAVEN_USERNAME: ${{ github.actor }}
+          MILL_MAVEN_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          $uri = "https://maven.pkg.github.com/$env:GH_MAVEN_REPO"
+          .\mill.bat mill.javalib.MavenPublishModule/ --releaseUri $uri --snapshotUri $uri --publishArtifacts __.publishArtifacts

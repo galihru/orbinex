@@ -1,0 +1,75 @@
+name: Publish Orbinex to Sonatype Central
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "v*"
+    paths:
+      - orbinex-modules/**
+      - .github/workflows/publish-sonatype-central.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  publish-sonatype-central:
+    runs-on: windows-latest
+    env:
+      ORBINEX_BASE_VERSION: 0.1.0
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - name: Resolve Publish Version
+        shell: pwsh
+        run: |
+          $isTag = $env:GITHUB_REF.StartsWith("refs/tags/")
+
+          if ($isTag) {
+            $tag = "$env:GITHUB_REF_NAME"
+            if ([string]::IsNullOrWhiteSpace($tag)) {
+              throw "GITHUB_REF_NAME is empty; release version cannot be derived."
+            }
+
+            if ($tag.StartsWith("v")) {
+              $version = $tag.Substring(1)
+            } else {
+              $version = $tag
+            }
+
+            "ORBINEX_PUBLISH_VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+            "ORBINEX_RELEASE_KIND=release" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          }
+          else {
+            $version = "$env:ORBINEX_BASE_VERSION-SNAPSHOT"
+            "ORBINEX_PUBLISH_VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+            "ORBINEX_RELEASE_KIND=snapshot" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          }
+
+      - name: Publish to Sonatype Central
+        shell: pwsh
+        working-directory: orbinex-modules
+        env:
+          MILL_SONATYPE_USERNAME: ${{ secrets.MILL_SONATYPE_USERNAME }}
+          MILL_SONATYPE_PASSWORD: ${{ secrets.MILL_SONATYPE_PASSWORD }}
+          MILL_PGP_SECRET_BASE64: ${{ secrets.MILL_PGP_SECRET_BASE64 }}
+          MILL_PGP_PASSPHRASE: ${{ secrets.MILL_PGP_PASSPHRASE }}
+        run: |
+          $bundle = "io.github.galihru-orbinex-$env:ORBINEX_PUBLISH_VERSION"
+
+          if ($env:ORBINEX_RELEASE_KIND -eq "snapshot") {
+            .\mill.bat mill.javalib.SonatypeCentralPublishModule/publishAll --publishArtifacts __.publishArtifacts --bundleName $bundle --shouldRelease false
+          }
+          else {
+            .\mill.bat mill.javalib.SonatypeCentralPublishModule/publishAll --publishArtifacts __.publishArtifacts --bundleName $bundle --shouldRelease true
+          }
