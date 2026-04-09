@@ -1,6 +1,6 @@
 {
   "name": "@galihru/orbinex",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Orbinex scientific formulas and simulation helpers for web and Node.js applications.",
   "type": "module",
   "license": "MIT",
