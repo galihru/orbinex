@@ -40,7 +40,7 @@ jobs:
 
       - name: Publish to GitHub Packages
         shell: pwsh
-        working-directory: orbinex-modules
+        working-directory: .
         env:
           MILL_MAVEN_USERNAME: ${{ github.actor }}
           MILL_MAVEN_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
