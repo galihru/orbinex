@@ -62,7 +62,7 @@ jobs:
 
   publish-npmjs:
     name: Publish to npmjs
-    if: ${{ (github.event.inputs.registry == 'npmjs' || github.event.inputs.registry == 'both') && secrets.NPM_TOKEN != '' }}
+    if: ${{ github.event.inputs.registry == 'npmjs' || github.event.inputs.registry == 'both' }}
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -78,6 +78,14 @@ jobs:
           registry-url: https://registry.npmjs.org
           scope: '@galihru'
 
+      - name: Ensure NPM_TOKEN is configured
+        run: |
+          if [ -z "${{ secrets.NPM_TOKEN }}" ]; then
+            echo "NPM_TOKEN is not configured in repository secrets."
+            echo "Set NPM_TOKEN to publish to registry.npmjs.org."
+            exit 1
+          fi
+
       - name: Install dependencies
         run: npm ci
 
@@ -88,25 +96,3 @@ jobs:
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-  github-token-missing:
-    name: Missing GitHub npm token notice
-    if: ${{ (github.event.inputs.registry == 'github' || github.event.inputs.registry == 'both') && secrets.GH_TOKEN == '' }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Fail with token guidance
-        run: |
-          echo "GH_TOKEN is not configured."
-          echo "Add GH_TOKEN in repository secrets with package write scope."
-          exit 1
-
-  npmjs-token-missing:
-    name: Missing npmjs token notice
-    if: ${{ (github.event.inputs.registry == 'npmjs' || github.event.inputs.registry == 'both') && secrets.NPM_TOKEN == '' }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Fail with token guidance
-        run: |
-          echo "NPM_TOKEN is not configured."
-          echo "Add NPM_TOKEN in repository secrets to publish to npmjs."
-          exit 1
