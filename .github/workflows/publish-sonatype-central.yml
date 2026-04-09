@@ -65,7 +65,7 @@ jobs:
           $bundle = "io.github.galihru-orbinex-$env:ORBINEX_PUBLISH_VERSION"
 
           if ($env:ORBINEX_RELEASE_KIND -eq "snapshot") {
-            .\mill.bat mill.javalib.SonatypeCentralPublishModule/publishAll --publishArtifacts __.publishArtifacts --bundleName $bundle --shouldRelease false
+            .\mill.bat mill.javalib.SonatypeCentralPublishModule/publishAll --publishArtifacts __.publishArtifacts --shouldRelease false
           }
           else {
             .\mill.bat mill.javalib.SonatypeCentralPublishModule/publishAll --publishArtifacts __.publishArtifacts --bundleName $bundle --shouldRelease true
