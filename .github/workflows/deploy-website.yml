@@ -38,7 +38,7 @@ jobs:
           cp README.md website/reference/README-repo.md
 
       - name: Upload Pages Artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v5
         with:
           path: website
 
